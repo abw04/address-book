@@ -19,15 +19,15 @@ const contacts = [
     phone: "08987654321",
     email: "bentinata@gmail.com",
     location: "Kediri",
-  }
+  },
 ];
 
-function formatContact(contact) {
+function formatContacts(contact) {
   for (let i = 0; i < contacts.length; i++) {
     console.log(
-      `${i+1}. ${contacts[i].fullName}, ${contacts[i].phone}, ${contacts[i].email}, in ${contacts[i].location}`,
+      `${i + 1}. ${contacts[i].fullName}, ${contacts[i].phone}, ${contacts[i].email}, in ${contacts[i].location}`,
     );
   }
 }
 
-formatContact(contacts)
+formatContacts(contacts);
