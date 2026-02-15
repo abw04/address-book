@@ -22,7 +22,7 @@ const contacts = [
   },
 ];
 
-function formatContacts(contact) {
+function formatContacts(contacts) {
   for (let i = 0; i < contacts.length; i++) {
     console.log(
       `${i + 1}. ${contacts[i].fullName}, ${contacts[i].phone}, ${contacts[i].email}, in ${contacts[i].location}`,
