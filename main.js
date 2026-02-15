@@ -22,6 +22,14 @@ const contacts = [
   },
 ];
 
+function addContact(contact) {
+    // tbd
+}
+
+function findContact(name) {
+    // tbd
+}
+
 function formatContacts(contacts) {
   for (let i = 0; i < contacts.length; i++) {
     console.log(
