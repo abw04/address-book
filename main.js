@@ -1,20 +1,17 @@
 const contacts = [
   {
-    id: 1,
     fullName: "Ardanu W",
     phone: "085780570715",
     email: "ardanuw@gmail.com",
     location: "Jakarta",
   },
   {
-    id: 2,
     fullName: "Haidar H",
     phone: "081234567890",
     email: "mhaidarhanif@gmail.com",
     location: "Jakarta",
   },
   {
-    id: 3,
     fullName: "Ben N",
     phone: "08987654321",
     email: "bentinata@gmail.com",
@@ -23,19 +20,41 @@ const contacts = [
 ];
 
 function addContact(contact) {
-    // tbd
+  contacts.push(contact);
+  console.log(contacts);
+}
+
+function generateID(contacts) {
+  for (let i = 0; i < contacts.length; i++) {
+    contacts[i].id = `${i + 1}`;
+  }
 }
 
 function findContact(name) {
-    // tbd
+  const nameSearch = contacts.filter((contact) => contact.fullName.includes(name) == true);
+  console.log(nameSearch);
 }
+//todo: allow search to be not case-sensitive
 
 function formatContacts(contacts) {
   for (let i = 0; i < contacts.length; i++) {
     console.log(
-      `${i + 1}. ${contacts[i].fullName}, ${contacts[i].phone}, ${contacts[i].email}, in ${contacts[i].location}`,
+      `${contacts[i].id}. ${contacts[i].fullName}, ${contacts[i].phone}, ${contacts[i].email}, in ${contacts[i].location}`,
     );
   }
 }
 
+addContact({
+  fullName: "Dimas A",
+  phone: "0857805088",
+  email: "dimasa@gmail.com",
+  location: "Bali",
+});
+
+generateID(contacts);
+
 formatContacts(contacts);
+
+findContact("H")
+
+
