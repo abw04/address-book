@@ -19,9 +19,28 @@ const contacts = [
   },
 ];
 
+function validateContact(contact) {
+  if (!contact.fullName) {
+    return "name is empty";
+  }
+  if (!contact.phone) {
+    return "phone is empty";
+  }
+  if (!contact.email) {
+    return "email is empty";
+  }
+  if (!contact.location) {
+    return "location is empty";
+  } else {
+    return "contact validated";
+  }
+}
+
 function addContact(contact) {
-  contacts.push(contact);
-  console.log(contacts);
+  if (validateContact(contact) === "contact validated") {
+    contacts.push(contact);
+    console.log(contacts);
+  }
 }
 
 function generateID(contacts) {
@@ -31,10 +50,18 @@ function generateID(contacts) {
 }
 
 function findContact(name) {
-  const nameSearch = contacts.filter((contact) => contact.fullName.includes(name) == true);
+  const n = name.toLowerCase();
+  const nameSearch = contacts.filter(
+    (contact) => contact.fullName.toLowerCase().includes(n) == true,
+  );
   console.log(nameSearch);
 }
-//todo: allow search to be not case-sensitive
+
+function sortContact(contacts) {
+  const sortedContact = contacts;
+  sortedContact.sort((a, b) => a.fullName.localeCompare(b.fullName));
+  console.log(sortedContact);
+}
 
 function formatContacts(contacts) {
   for (let i = 0; i < contacts.length; i++) {
@@ -51,10 +78,19 @@ addContact({
   location: "Bali",
 });
 
+addContact({
+  fullName: "IGD Arya",
+  phone: "0857805022",
+  email: "igdarya@gmail.com",
+  location: "depok",
+});
+
+
 generateID(contacts);
 
 formatContacts(contacts);
 
-findContact("H")
+findContact("ar");
 
+sortContact(contacts);
 
