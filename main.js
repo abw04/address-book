@@ -19,6 +19,7 @@ const contacts = [
   },
 ];
 
+// thought: non-correct validation return message is unused
 function validateContact(contact) {
   if (!contact.fullName) {
     return "name is empty";
@@ -36,8 +37,10 @@ function validateContact(contact) {
   }
 }
 
+// TODO: id should be generated from the start, not a separate function call
 function addContact(contact) {
   if (validateContact(contact) === "contact validated") {
+    // TODO: contact should contain id before pushing to contacts here
     contacts.push(contact);
     console.log(contacts);
   }
