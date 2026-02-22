@@ -93,6 +93,14 @@ function deleteContact(id) {
   console.log(filtered);
 }
 
+function render(contact) {
+  const element = document.createElement("p");
+  element.innerHTML = contact.fullName;
+
+  const divContact = document.getElementById("contact");
+  divContact.appendChild(element);
+}
+
 addContact({
   fullName: "Dimas A",
   phone: "0857805088",
@@ -120,3 +128,5 @@ deleteContact(3);
 fetch("https://restcountries.com/v3.1/name/indonesia")
   .then((response) => response.json())
   .then((json) => console.log(json));
+
+render(contacts[0]);
