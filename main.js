@@ -24,24 +24,20 @@ const contacts = [
 
 // thought: non-correct validation return message is unused
 function validateContact(contact) {
-  if (!contact.fullName) {
-    return "name is empty";
-  }
-  if (!contact.phone) {
-    return "phone is empty";
-  }
-  if (!contact.email) {
-    return "email is empty";
-  }
-  if (!contact.location) {
-    return "location is empty";
+  if (
+    !contact.fullName ||
+    !contact.phone ||
+    !contact.email ||
+    !contact.location
+  ) {
+    return false;
   } else {
-    return "contact validated";
+    return true;
   }
 }
 
 function addContact(contact) {
-  if (validateContact(contact) === "contact validated") {
+  if (validateContact(contact) == true) {
     const newContact = { id: `${contacts.length + 1}`, ...contact };
     contacts.push(newContact);
     saveContacts(contacts);
@@ -85,9 +81,9 @@ function formatContacts(array) {
 }
 
 function deleteContact(id) {
-    const contacts = loadContacts("contactskey");
+  const contacts = loadContacts("contactskey");
   const filtered = contacts.filter((contact) => contact.id !== id);
-  saveContacts(filtered)
+  saveContacts(filtered);
   console.log(filtered);
 }
 
@@ -115,6 +111,6 @@ sortContact(contacts);
 
 deleteContact(3);
 
-fetch("https://pokeapi.co/api/v2/pokemon/heracross")
+fetch("https://restcountries.com/v3.1/name/indonesia")
   .then((response) => response.json())
   .then((json) => console.log(json));
