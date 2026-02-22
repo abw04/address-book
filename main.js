@@ -22,7 +22,7 @@ const contacts = [
   },
 ];
 
-// thought: non-correct validation return message is unused
+// TODO: move *contact to a new contact.js file, then import it here
 function validateContact(contact) {
   if (
     !contact.fullName ||
@@ -36,6 +36,7 @@ function validateContact(contact) {
   }
 }
 
+// TODO: move *contact to a new contact.js file, then import it here
 function addContact(contact) {
   if (validateContact(contact) == true) {
     const newContact = { id: `${contacts.length + 1}`, ...contact };
@@ -45,16 +46,19 @@ function addContact(contact) {
   }
 }
 
+// TODO: move *contact to a new contact.js file, then import it here
 function saveContacts(contacts) {
   localStorage.setItem("contactskey", JSON.stringify(contacts));
 }
 
+// TODO: move *contact to a new contact.js file, then import it here
 function loadContacts(key) {
   const rawdata = localStorage.getItem(key);
   const parsed = rawdata ? JSON.parse(rawdata) : [];
   return parsed;
 }
 
+// TODO: move *contact to a new contact.js file, then import it here
 function findContact(name) {
   const contacts = loadContacts("contactskey");
   const n = name.toLowerCase();
@@ -64,6 +68,7 @@ function findContact(name) {
   console.log(nameSearch);
 }
 
+// TODO: move *contact to a new contact.js file, then import it here
 function sortContact(text) {
   const contacts = loadContacts("contactskey");
   const sortedContact = [...contacts];
@@ -80,6 +85,7 @@ function formatContacts(array) {
   }
 }
 
+// TODO: move *contact to a new contact.js file, then import it here
 function deleteContact(id) {
   const contacts = loadContacts("contactskey");
   const filtered = contacts.filter((contact) => contact.id !== id);
