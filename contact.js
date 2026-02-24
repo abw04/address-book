@@ -69,18 +69,12 @@ function deleteContact(id) {
   console.log(filtered);
 }
 
-function render(contact) {
-  const nameElement = document.createElement("p");
-  nameElement.innerHTML = `Name: ${contact.fullName}`;
-
-  const phoneElement = document.createElement("p");
-  phoneElement.innerHTML = `Phone: ${contact.phone}`;
-
-  const mailElement = document.createElement("p");
-  mailElement.innerHTML = `Email: ${contact.email}`;
+function render(contacts) {
+  const listElement = document.createElement("ul");
+  for (let i = 0; i < contacts.length; i++) {
+    listElement.innerHTML += `<li>Name: ${contacts[i].fullName}</li> <li>Phone: ${contacts[i].phone}</li> <li>Email: ${contacts[i].email}</li> <li>Location: ${contacts[i].location}</li>`;
+  }
 
   const divContact = document.getElementById("contact");
-  divContact.appendChild(nameElement);
-  divContact.appendChild(phoneElement);
-  divContact.appendChild(mailElement);
+  divContact.appendChild(listElement);
 }

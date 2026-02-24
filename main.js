@@ -50,4 +50,4 @@ fetch("https://restcountries.com/v3.1/name/indonesia")
   .then((response) => response.json())
   .then((json) => console.log(json));
 
-render(contacts[1]);
+render(contacts);
