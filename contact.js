@@ -1,4 +1,3 @@
-// TODO: move *contact to a new contact.js file, then import it here
 function validateContact(contact) {
   if (
     !contact.fullName ||
@@ -12,39 +11,34 @@ function validateContact(contact) {
   }
 }
 
-// TODO: move *contact to a new contact.js file, then import it here
 function addContact(contact) {
   if (validateContact(contact) == true) {
-    const newContact = { id: `${contacts.length + 1}`, ...contact };
+    const newContact = { id: contacts.length + 1, ...contact };
     contacts.push(newContact);
     saveContacts(contacts);
     console.log(contacts);
   }
 }
 
-// TODO: move *contact to a new contact.js file, then import it here
 function saveContacts(contacts) {
   localStorage.setItem("contactskey", JSON.stringify(contacts));
 }
 
-// TODO: move *contact to a new contact.js file, then import it here
 function loadContacts(key) {
   const rawdata = localStorage.getItem(key);
   const parsed = rawdata ? JSON.parse(rawdata) : [];
   return parsed;
 }
 
-// TODO: move *contact to a new contact.js file, then import it here
 function findContact(name) {
   const contacts = loadContacts("contactskey");
   const n = name.toLowerCase();
   const nameSearch = contacts.filter(
     (contact) => contact.fullName.toLowerCase().includes(n) == true,
   );
-  console.log(nameSearch);
+  return nameSearch;
 }
 
-// TODO: move *contact to a new contact.js file, then import it here
 function sortContact(text) {
   const contacts = loadContacts("contactskey");
   const sortedContact = [...contacts];
@@ -61,20 +55,44 @@ function formatContacts(array) {
   }
 }
 
-// TODO: move *contact to a new contact.js file, then import it here
 function deleteContact(id) {
   const contacts = loadContacts("contactskey");
   const filtered = contacts.filter((contact) => contact.id !== id);
   saveContacts(filtered);
   console.log(filtered);
+  return filtered;
 }
+
+const listElement = document.getElementById("contact");
+const searchElement = document.getElementById("search");
+const contactFormElement = document.getElementById("contact-form");
+const searchBarElement = document.getElementById("search-bar");
+const editElement = document.getElementById("edit-button");
+const deleteElement = document.getElementById("del-button");
 
 function render(contacts) {
-  const listElement = document.createElement("ul");
+  listElement.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
-    listElement.innerHTML += `<li>Name: ${contacts[i].fullName}</li> <li>Phone: ${contacts[i].phone}</li> <li>Email: ${contacts[i].email}</li> <li>Location: ${contacts[i].location}</li>`;
+    list = document.createElement("li");
+    list.innerHTML = `<ul>
+    <li>Name: ${contacts[i].fullName}</li>
+     <li>Phone: ${contacts[i].phone}</li> 
+     <li>Email: ${contacts[i].email}</li> 
+     <li>Location: ${contacts[i].location}</li> </ul>
+     <button id = "edit-button"> edit contact </button>
+     <button id = "del-button"> delete contact </button>`;
+    list.querySelector("#del-button").addEventListener("click", () => {
+      contactlist = deleteContact(contacts[i].id);
+      saveContacts(contactlist);
+      render(contactlist);
+    });
+    listElement.appendChild(list);
   }
-
-  const divContact = document.getElementById("contact");
-  divContact.appendChild(listElement);
 }
+
+searchElement.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const query = searchBarElement.value;
+  const results = findContact(query);
+  render(results);
+});

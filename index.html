@@ -3,31 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Address Book</title>
   </head>
 
   <body>
     <nav>
       <h1>Address book</h1>
-      <input type="search" />
-      <button>Search</button>
+      <form id = "search">
+      <input type="search" id = "search-bar" />
+      <button  id = "search-button">Search</button>
+      </form>
     </nav>
-    <form>
+    <form id = "contact-form">
       <div>
-        <label>Full Name</label>
-        <input type="text" />
+        <label for = "full-name">Full Name</label>
+        <input type="text" id = "full-name" />
       </div>
       <div>
-        <label>Phone</label>
-        <input type="text" />
+        <label for = "phone">Phone</label>
+        <input type="text" id = "phone" />
       </div>
       <div>
-        <label>Email</label>
-        <input type="text" />
+        <label for = "email">Email</label>
+        <input type="text" id = "email" />
       </div>
       <div>
-        <label>Location</label>
-        <input type="text" />
+        <label for = "location">Location</label>
+        <input type="text" id = "location" />
       </div>
       <button>Add Contact</button>
     </form>
