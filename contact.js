@@ -36,7 +36,7 @@ function findContact(name) {
   const nameSearch = contacts.filter(
     (contact) => contact.fullName.toLowerCase().includes(n) == true,
   );
-  return nameSearch;
+  return nameSearch
 }
 
 function sortContact(text) {
@@ -95,4 +95,18 @@ searchElement.addEventListener("submit", (event) => {
   const query = searchBarElement.value;
   const results = findContact(query);
   render(results);
+});
+
+contactFormElement.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const contactData = new FormData(contactFormElement);
+  const newContact = {
+    fullName: contactData.get("full-name"),
+    phone: contactData.get("phone"),
+    email: contactData.get("email"),
+    location: contactData.get("location"),
+  };
+  addContact(newContact);
+  render(contacts);
+  contactFormElement.reset();
 });
