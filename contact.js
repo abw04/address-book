@@ -73,7 +73,9 @@ const deleteElement = document.getElementById("del-button");
 function render(contacts) {
   listElement.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
+    // TODO: use a better name, i.e. contactContainer
     list = document.createElement("div");
+    // TODO: delete button should not be assigned with the same id, maybe use class instead?
     list.innerHTML = `<div class = "p-2"> 
     <ul>
     <li>Name: ${contacts[i].fullName}</li>
@@ -83,6 +85,7 @@ function render(contacts) {
      <button id = "del-button"> delete contact </button></div>`;
     list.querySelector("#del-button").addEventListener("click", () => {
       contactlist = deleteContact(contacts[i].id);
+      // TODO: saveContacts() called twice?
       saveContacts(contactlist);
       render(contactlist);
     });
@@ -90,6 +93,7 @@ function render(contacts) {
   }
 }
 
+// TODO: move form handler back to main.js or somewhere else
 searchElement.addEventListener("submit", (event) => {
   event.preventDefault();
   const query = searchBarElement.value;
@@ -97,6 +101,7 @@ searchElement.addEventListener("submit", (event) => {
   render(results);
 });
 
+// TODO: move form handler back to main.js or somewhere else
 contactFormElement.addEventListener("submit", (event) => {
   event.preventDefault();
   const contactData = new FormData(contactFormElement);
