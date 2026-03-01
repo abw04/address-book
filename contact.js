@@ -73,14 +73,14 @@ const deleteElement = document.getElementById("del-button");
 function render(contacts) {
   listElement.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
-    list = document.createElement("li");
-    list.innerHTML = `<ul>
+    list = document.createElement("div");
+    list.innerHTML = `<div class = "p-2"> 
+    <ul>
     <li>Name: ${contacts[i].fullName}</li>
      <li>Phone: ${contacts[i].phone}</li> 
      <li>Email: ${contacts[i].email}</li> 
      <li>Location: ${contacts[i].location}</li> </ul>
-     <button id = "edit-button"> edit contact </button>
-     <button id = "del-button"> delete contact </button>`;
+     <button id = "del-button"> delete contact </button></div>`;
     list.querySelector("#del-button").addEventListener("click", () => {
       contactlist = deleteContact(contacts[i].id);
       saveContacts(contactlist);
