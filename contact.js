@@ -11,12 +11,20 @@ export function validateContact(contact) {
   }
 }
 
-export function addContact(contacts, contact) {
+export function addContact(contacts, contact, editID) {
   if (validateContact(contact) == true) {
-    const newContact = { id: crypto.randomUUID(), ...contact };
-    contacts.push(newContact);
-    saveContacts(contacts);
-    console.log(contacts);
+    if (editID == null) {
+      const newContact = { id: crypto.randomUUID(), ...contact };
+      contacts.push(newContact);
+      saveContacts(contacts);
+      console.log(contacts);
+    } else {
+      const index = contacts.findIndex((contact) => contact.id === editID)
+      const newContact = { id: editID, ...contact };
+      contacts[index] = newContact
+      saveContacts(contacts);
+      console.log(contacts);
+    }
   }
 }
 
@@ -55,6 +63,14 @@ export function formatContacts(array) {
   }
 }
 
+export function editContact(id, contacts) {
+  const contactData = contacts.find((contact) => id === contact.id);
+  document.querySelector("#full-name").value = contactData.fullName;
+  document.querySelector("#phone").value = contactData.phone;
+  document.querySelector("#email").value = contactData.email;
+  document.querySelector("#location").value = contactData.location;
+}
+
 export function deleteContact(id) {
   const contacts = loadContacts("contactskey");
   const filtered = contacts.filter((contact) => contact.id !== id);
@@ -63,7 +79,7 @@ export function deleteContact(id) {
   return filtered;
 }
 
-export function render(contacts, listElement) {
+export function render(contacts, listElement, editClick) {
   listElement.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     let list = document.createElement("contactContainer");
@@ -73,11 +89,16 @@ export function render(contacts, listElement) {
      <li>Phone: ${contacts[i].phone}</li> 
      <li>Email: ${contacts[i].email}</li> 
      <li>Location: ${contacts[i].location}</li> </ul>
+     <button class = "edit-button"> edit contact </button>
      <button class = "del-button"> delete contact </button></div>`;
     list.querySelector(".del-button").addEventListener("click", () => {
       let contactlist = deleteContact(contacts[i].id);
       contacts = loadContacts("contactskey");
-      render(contactlist, listElement);
+      render(contactlist, listElement, editClick);
+    });
+    list.querySelector(".edit-button").addEventListener("click", () => {
+      editClick(contacts[i].id);
+      editContact(contacts[i].id, contacts);
     });
     listElement.appendChild(list);
   }
