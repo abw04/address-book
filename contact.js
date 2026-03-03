@@ -1,4 +1,4 @@
-function validateContact(contact) {
+export function validateContact(contact) {
   if (
     !contact.fullName ||
     !contact.phone ||
@@ -11,42 +11,42 @@ function validateContact(contact) {
   }
 }
 
-function addContact(contact) {
+export function addContact(contacts, contact) {
   if (validateContact(contact) == true) {
-    const newContact = { id: contacts.length + 1, ...contact };
+    const newContact = { id: crypto.randomUUID(), ...contact };
     contacts.push(newContact);
     saveContacts(contacts);
     console.log(contacts);
   }
 }
 
-function saveContacts(contacts) {
+export function saveContacts(contacts) {
   localStorage.setItem("contactskey", JSON.stringify(contacts));
 }
 
-function loadContacts(key) {
+export function loadContacts(key) {
   const rawdata = localStorage.getItem(key);
   const parsed = rawdata ? JSON.parse(rawdata) : [];
   return parsed;
 }
 
-function findContact(name) {
+export function findContact(name) {
   const contacts = loadContacts("contactskey");
   const n = name.toLowerCase();
   const nameSearch = contacts.filter(
     (contact) => contact.fullName.toLowerCase().includes(n) == true,
   );
-  return nameSearch
+  return nameSearch;
 }
 
-function sortContact(text) {
+export function sortContact(text) {
   const contacts = loadContacts("contactskey");
   const sortedContact = [...contacts];
   sortedContact.sort((a, b) => a.fullName.localeCompare(b.fullName));
   console.log(sortedContact);
 }
 
-function formatContacts(array) {
+export function formatContacts(array) {
   const contacts = loadContacts("contactskey");
   for (let i = 0; i < contacts.length; i++) {
     console.log(
@@ -55,7 +55,7 @@ function formatContacts(array) {
   }
 }
 
-function deleteContact(id) {
+export function deleteContact(id) {
   const contacts = loadContacts("contactskey");
   const filtered = contacts.filter((contact) => contact.id !== id);
   saveContacts(filtered);
@@ -63,55 +63,22 @@ function deleteContact(id) {
   return filtered;
 }
 
-const listElement = document.getElementById("contact");
-const searchElement = document.getElementById("search");
-const contactFormElement = document.getElementById("contact-form");
-const searchBarElement = document.getElementById("search-bar");
-const editElement = document.getElementById("edit-button");
-const deleteElement = document.getElementById("del-button");
-
-function render(contacts) {
+export function render(contacts, listElement) {
   listElement.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
-    // TODO: use a better name, i.e. contactContainer
-    list = document.createElement("div");
-    // TODO: delete button should not be assigned with the same id, maybe use class instead?
+    let list = document.createElement("contactContainer");
     list.innerHTML = `<div class = "p-2"> 
     <ul>
     <li>Name: ${contacts[i].fullName}</li>
      <li>Phone: ${contacts[i].phone}</li> 
      <li>Email: ${contacts[i].email}</li> 
      <li>Location: ${contacts[i].location}</li> </ul>
-     <button id = "del-button"> delete contact </button></div>`;
-    list.querySelector("#del-button").addEventListener("click", () => {
-      contactlist = deleteContact(contacts[i].id);
-      // TODO: saveContacts() called twice?
-      saveContacts(contactlist);
-      render(contactlist);
+     <button class = "del-button"> delete contact </button></div>`;
+    list.querySelector(".del-button").addEventListener("click", () => {
+      let contactlist = deleteContact(contacts[i].id);
+      contacts = loadContacts("contactskey");
+      render(contactlist, listElement);
     });
     listElement.appendChild(list);
   }
 }
-
-// TODO: move form handler back to main.js or somewhere else
-searchElement.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const query = searchBarElement.value;
-  const results = findContact(query);
-  render(results);
-});
-
-// TODO: move form handler back to main.js or somewhere else
-contactFormElement.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const contactData = new FormData(contactFormElement);
-  const newContact = {
-    fullName: contactData.get("full-name"),
-    phone: contactData.get("phone"),
-    email: contactData.get("email"),
-    location: contactData.get("location"),
-  };
-  addContact(newContact);
-  render(contacts);
-  contactFormElement.reset();
-});
