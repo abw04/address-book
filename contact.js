@@ -13,11 +13,13 @@ export function validateContact(contact) {
 
 export function addContact(contacts, contact, editID) {
   if (validateContact(contact) == true) {
+    // adding a new contact
     if (editID == null) {
       const newContact = { id: crypto.randomUUID(), ...contact };
       contacts.push(newContact);
       saveContacts(contacts);
       console.log(contacts);
+    // editing a contact
     } else {
       const index = contacts.findIndex((contact) => contact.id === editID)
       const newContact = { id: editID, ...contact };
@@ -47,22 +49,6 @@ export function findContact(name) {
   return nameSearch;
 }
 
-export function sortContact(text) {
-  const contacts = loadContacts("contactskey");
-  const sortedContact = [...contacts];
-  sortedContact.sort((a, b) => a.fullName.localeCompare(b.fullName));
-  console.log(sortedContact);
-}
-
-export function formatContacts(array) {
-  const contacts = loadContacts("contactskey");
-  for (let i = 0; i < contacts.length; i++) {
-    console.log(
-      `${contacts[i].id}. ${contacts[i].fullName}, ${contacts[i].phone}, ${contacts[i].email}, in ${contacts[i].location}`,
-    );
-  }
-}
-
 export function editContact(id, contacts) {
   const contactData = contacts.find((contact) => id === contact.id);
   document.querySelector("#full-name").value = contactData.fullName;
@@ -83,14 +69,14 @@ export function render(contacts, listElement, editClick) {
   listElement.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     let list = document.createElement("contactContainer");
-    list.innerHTML = `<div class = "p-2"> 
+    list.innerHTML = `<div class = "p-2 border m-5 rounded bg-blue-100"> 
     <ul>
     <li>Name: ${contacts[i].fullName}</li>
      <li>Phone: ${contacts[i].phone}</li> 
      <li>Email: ${contacts[i].email}</li> 
      <li>Location: ${contacts[i].location}</li> </ul>
-     <button class = "edit-button"> edit contact </button>
-     <button class = "del-button"> delete contact </button></div>`;
+     <button class = "edit-button mt-2 border border-black box-border p-0.5 px-1 rounded text-white text-sm bg-blue-800"> Edit Contact </button>
+     <button class = "del-button mt-2 border border-black box-border p-0.5 px-1 rounded text-white text-sm bg-blue-800"> Delete Contact </button></div>`;
     list.querySelector(".del-button").addEventListener("click", () => {
       let contactlist = deleteContact(contacts[i].id);
       contacts = loadContacts("contactskey");

@@ -2,7 +2,6 @@ import {
   addContact,
   loadContacts,
   findContact,
-  sortContact,
   deleteContact,
   render,
 } from "./contact.js";
@@ -19,9 +18,7 @@ const handleEdit =(id) => {
   editID =id;
 }
 
-render(contacts, listElement, (id) => {
-  editID = id;
-});
+render(contacts, listElement, handleEdit);
 
 searchElement.addEventListener("submit", (event) => {
   event.preventDefault();

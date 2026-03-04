@@ -7,10 +7,10 @@
     <title>Address Book</title>
   </head>
 
-  <body class="max-3xl m-auto">
-    <nav class="p-4 flex bg-blue-200 justify-between items-center">
-      <h1 class="text-5xl">Address Book</h1>
-      <form class="text-3xl" id="search">
+  <body class="max-w-3xl m-auto">
+    <nav class="p-4 flex bg-blue-200 justify-between items-center border-b">
+      <h1 class="text-3xl">Address Book</h1>
+      <form class="text-xl" id="search">
         <input type="search" id="search-bar" class="border p-1" />
         <button
           id="search-button"
@@ -21,8 +21,8 @@
         </button>
       </form>
     </nav>
-    <div class="flex gap-2">
-      <form id="contact-form" class="p-2">
+    <div class="flex justify-center bg-gray-100 min-h-screen">
+      <form id="contact-form" class="p-5 justify-center pr-25">
         <div class="my-1">
           <label for="full-name" class="block">Full Name</label>
           <input type="text" id="full-name" name="full-name" class="border" />
@@ -50,8 +50,7 @@
           Cancel
         </button>
       </form>
-
-      <div class="border" id="contact"></div>
+      <div id="contact" class = "border-l p-2"></div>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
